@@ -1,0 +1,102 @@
+<template name='if-else'>
+	<scroll-view>
+		<view id='con'>
+			<view onclick={e => this.clickOnece('被点击')} class="list-item" >
+				<view>
+					<img v-bind:src="src" class="list-icon" @click="clickOnece"/>
+					<text class="list-txt">img的src通过v-bind绑定到data的src字段</text>
+				</view>
+			</view>
+			<button id='btn' :disabled="disabled" onClick={this.clickChange} v-bind:btnText="anyText">Click Me</button>
+		</view>
+	</scroll-view>
+</template>
+<style>
+	view{
+		display: -webkit-flex;
+		flex-direction:column;
+		justify-content:flex-start;
+		align-items:stretch;
+		flex-wrap:nowrap;
+		align-content:stretch;
+	}
+	#con{
+		flex:1;
+		background-color:#E8E8E8; 
+		margin:20px 10px;
+		border-radius:6px;
+	}
+	.list-item{
+		flex-direction:row;
+		align-items:center;
+		justify-content:left;
+		background-color:white; 
+		margin:10px;
+		padding: 10px;
+		border:1px solid green;
+		border-radius:6px;
+	}
+	.list-txt{
+		margin-left:35px;
+		height:30px;
+		font-size:14px;
+	}
+	.list-icon{
+		width:50px;
+		height:50px;
+	}
+	#btn{
+		border-radius:3px;
+		margin:10px;
+		border:1px solid green;
+		background-color:rgba(0,0,0,0);
+		font-size:18px;
+		padding:5px;
+	}
+</style>
+<script>
+export default {
+	name: 'if-else',
+
+	apiready(){
+		console.log('Component apiready in ... ');
+	},
+	data(){
+		return {
+			title: 'Hello App',
+			error: false,
+			disabled: true,
+			src: '../images/163.png',
+			anyText:'我是被绑定的任意字符串',
+			count: 0
+		};
+	},
+	methods: {
+		// 注释一
+		clickOnece (msg) {
+			var _msg = msg;
+			if(this.data.disabled){
+				this.data.disabled = false;
+				_msg = 'Button可用了';
+			}else{
+				this.data.disabled = true;
+				_msg = 'Button不可用了！';
+			}
+			api.toast({msg: _msg});
+		},
+		clickChange(){
+			console_log('clickChange ... ');
+			this.data.count++;
+			this.data.anyText = this.data.anyText + this.data.count;
+			if(this.data.error){
+				this.data.error = false;
+				this.data.src = '../images/163.png'
+			}else{
+				this.data.error = true;
+				this.data.src = '../images/suho.png'
+			}
+			console.log('v-bind:btnText = ' + $('#btn').getAttribute('btnText'));
+		}
+	}
+}
+</script>

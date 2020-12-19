@@ -1,0 +1,215 @@
+<template name='scf-test'>
+	<scroll-view>
+		<div id='con'>
+			<div id='first-itm' onclick={e => this.clickOnece('children')} class="list-item" ontapmode={e => this.clickOnece('children')}>
+				<img src={this.data.src} class="list-icon" onclick={e => this.clickShow()} />
+				<text v-if='error' class="list-txt">children</text>
+				<img src='http://192.168.13.120/images/dianping.png' class="list-icon" onclick={e => this.clickChange()} />
+			</div>
+			<div onclick={e => this.jumpTo('counter')} class="list-item">
+				<img src='http://192.168.13.120/images/163.png' class="list-icon" />
+				<text class="list-txt">counter</text>
+			</div>
+			<div onclick="jumpTo('css')" class="list-item">
+				<img src='http://192.168.13.120/images/163.png' class="list-icon" />
+				<text class="list-txt">css</text>
+			</div>
+			<div onclick="jumpTo('fire')" class="list-item">
+				<img src='http://192.168.13.120/images/163.png' class="list-icon" />
+				<text class="list-txt">fire</text>
+			</div>
+			<div onclick="jumpTo('flex')" class="list-item">
+				<img src='http://192.168.13.120/images/163.png' class="list-icon" />
+				<text class="list-txt">flex</text>
+			</div>
+			<div onclick="jumpTo('get-host')" class="list-item">
+				<img src='http://192.168.13.120/images/163.png' class="list-icon" />
+				<text class="list-txt">get-host</text>
+			</div>
+			<div onclick="jumpTo('image')" class="list-item">
+				<img src='http://192.168.13.120/images/163.png' class="list-icon" />
+				<text class="list-txt">image</text>
+			</div>
+			<div onclick="jumpTo('mp-view')" class="list-item">
+				<img src='http://192.168.13.120/images/163.png' class="list-icon" />
+				<text class="list-txt">mp-view</text>
+			</div>
+			<div onclick="jumpTo('mvvm')" class="list-item">
+				<img src='http://192.168.13.120/images/163.png' class="list-icon" />
+				<text class="list-txt">mvvm</text>
+			</div>
+			<div onclick="jumpTo('react-style')" class="list-item">
+				<img src='http://192.168.13.120/images/163.png' class="list-icon" />
+				<text class="list-txt">react-style</text>
+			</div>
+			<div onclick="jumpTo('receive-props')" class="list-item">
+				<img src='http://192.168.13.120/images/163.png' class="list-icon" />
+				<text class="list-txt">receive-props</text>
+			</div>
+			<div onclick="jumpTo('render-array')" class="list-item">
+				<img src='http://192.168.13.120/images/163.png' class="list-icon" />
+				<text class="list-txt">render-array</text>
+			</div>
+			<div onclick="jumpTo('simple')" class="list-item">
+				<img src='http://192.168.13.120/images/163.png' class="list-icon" />
+				<text class="list-txt">simple</text>
+			</div>
+			<div onclick="jumpTo('store')" class="list-item">
+				<img src='http://192.168.13.120/images/163.png' class="list-icon" />
+				<text class="list-txt">store</text>
+			</div>
+			<div onclick="jumpTo('store-counter')" class="list-item">
+				<img src='http://192.168.13.120/images/163.png' class="list-icon" />
+				<text class="list-txt">store-counter</text>
+			</div>
+			<div onclick="jumpTo('store-demo')" class="list-item">
+				<img src='http://192.168.13.120/images/163.png' class="list-icon" />
+				<text class="list-txt">store-demo</text>
+			</div>
+			<div onclick="jumpTo('tap')" class="list-item">
+				<img src='http://192.168.13.120/images/163.png' class="list-icon" />
+				<text class="list-txt">tap</text>
+			</div>
+			<div onclick="jumpTo('todo-app')" class="list-item">
+				<img src='http://192.168.13.120/images/163.png' class="list-icon" />
+				<text class="list-txt">todo-app</text>
+			</div>
+			<input value='哈哈哈' class="list-item" >
+		</div>
+	</scroll-view>
+</template>
+<style>
+	.list-item{
+			flex-direction:row;
+			align-items:center;
+			justify-content:left;
+			background-color:white; 
+			margin:10px;
+			padding: 10px;
+			border:1px solid green;
+			border-radius:6px;
+		}
+		.list-txt{
+			margin-left:35px;
+			height:30px;
+			font-size:18px;
+		}
+		.list-icon{
+			width:50px;
+			height:50px;
+		}
+		#con{
+			flex:1;
+			background-color:grey; 
+			margin:20px 10px;
+			border-radius:6px;
+		}
+</style>
+<script>
+
+apiready = function(){
+	console.log('Global apiready in ...');
+	//openContent('sudoku.html', 'main');
+	$('year').innerHTML = new Date().getFullYear();
+};
+
+var testObj = {
+	keya: 'aaa',
+	kayb: false,
+	funu: function(title){
+		console_log('funu title: ' + title);
+	}
+};
+
+global.jumpTo = function(title){
+	console_log('jumpTo: ' + title);
+	api.openWin({
+		name:title,
+		url: '../' + title + '/b.js'
+	});
+}
+// 注释一
+function jumpOff(off){
+	console_log('jumpOff: ' + off);
+}
+
+api.addEventListener({
+    name: 'batterylow'
+}, function(ret, err) {
+    if (ret) {
+        alert(JSON.stringify(ret));
+    } else {
+        alert(JSON.stringify(err));
+    }
+});
+
+export default {
+	name: 'scf-test',
+
+	apiready(){
+		//console.log('Component apiready in ... ' + this.data.title);
+		console.log('Component apiready in ... ');
+		//openContent('sudoku.html', 'main');
+		$('year').innerHTML = new Date().getFullYear();
+	},
+	data(){
+		return {
+			title: 'Hello App',
+			error: false,
+			src: 'http://192.168.13.120/images/163.png'
+		};
+	},
+	props: {
+		type: {
+			type: String,
+			default: 'info',
+			validator: (value) => {
+				return [ 'info', 'warning', 'error' ].indexOf(value) !== -1;
+			}
+		}
+	},
+	computed: {
+		primaryColor: function () {
+			return colorTable[this.type];
+		}
+	},
+	methods: {
+		// 注释一
+		computeHeight() {
+			var o = new Object();
+			o();
+			var vv = o.menb1;
+			return this.title;
+		},
+		// 注释一
+		clickOnece (title) {
+			console_log('clickOnece: http://www.baidu.com' + title);
+		},
+		clickShow(){
+			console_log('clickShow ... ');
+			if(this.data.error){
+				this.data.error = false;
+			}else{
+				this.data.error = true;
+			}
+		},
+		clickChange(){
+			console_log('clickChange ... ');
+			if(this.data.c){
+				this.data.c = false;
+				this.data.src = 'http://192.168.13.120/images/163.png';
+			}else{
+				this.data.c = true;
+				this.data.src = 'http://192.168.13.120/images/dianping.png';
+			}
+		},
+		jumpTo (title){
+			console_log('jumpTo: ' + title);
+			api.openWin({
+				name:title,
+				url: '../' + title + '/b.js'
+			});
+		}
+	}
+}
+</script>

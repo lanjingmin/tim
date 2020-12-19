@@ -1,0 +1,73 @@
+<template name='props'>
+	<scroll-view>
+		<view id='con'>
+			<view >
+				<view v-if='error'>
+					<text class="list-txt">{{title}}</text>
+				</view>
+			</view>
+		</view>
+	</scroll-view>
+</template>
+<style>
+	#con{
+		flex:1;
+		background-color:#E8E8E8; 
+		margin:20px 10px;
+		border-radius:6px;
+	}
+	.list-item{
+		flex-direction:row;
+		align-items:center;
+		justify-content:left;
+		background-color:white; 
+		margin:10px;
+		padding: 10px;
+		border:1px solid green;
+		border-radius:6px;
+	}
+	.list-txt{
+		margin-left:35px;
+		height:30px;
+		font-size:18px;
+	}
+	.list-icon{
+		width:50px;
+		height:50px;
+	}
+	#btn{
+		border-radius:3px;
+		margin:10px;
+		border:1px solid green;
+		background-color:rgba(0,0,0,0);
+		font-size:18px;
+		padding:5px;
+	}
+</style>
+<script>
+export default {
+	name: 'props',
+
+	apiready(){
+		console.log('Component apiready in ... ');
+	},
+	data(){
+		return {
+			title: '暂时不支持',
+			error: true,
+		};
+	},
+	props: {
+		type: {
+			type: String,
+			default: 'info',
+			validator: (value) => {
+				return [ 'info', 'warning', 'error' ].indexOf(value) !== -1;
+			}
+		}
+	},
+	methods: {
+		
+	}
+}
+</script>

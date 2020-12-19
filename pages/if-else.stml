@@ -1,0 +1,91 @@
+<template name='if-else'>
+	<scroll-view>
+		<view id='con'>
+			<view onclick={e => this.clickOnece('被点击')} id='wap'>
+				<view v-if='error' class="list-item">
+					<img src={this.data.src} class="list-icon" />
+					<text class="list-txt">出错啦</text>
+				</view>
+				<img v-else src='../images/dianping.png' class="list-icon" />
+			</view>
+			<button id='btn' onClick={this.clickChange}>Click To Change</button>
+		</view>
+	</scroll-view>
+</template>
+<style>
+	view{
+		display: -webkit-flex;
+		flex-direction:column;
+		justify-content:flex-start;
+		align-items:stretch;
+		flex-wrap:nowrap;
+		align-content:stretch;
+	}
+	#con{
+		flex:1;
+		background-color:#E8E8E8; 
+		margin:20px 10px;
+		border-radius:6px;
+	}
+	#wap{
+		justify-content:center;
+		align-content:center;
+	}
+	.list-item{
+		flex-direction:row;
+		align-items:center;
+		justify-content:left;
+		background-color:white; 
+		margin:10px;
+		padding: 10px;
+		border:1px solid green;
+		border-radius:6px;
+	}
+	.list-txt{
+		margin-left:35px;
+		height:30px;
+		font-size:18px;
+	}
+	.list-icon{
+		width:50px;
+		height:50px;
+	}
+	#btn{
+		border-radius:3px;
+		margin:10px;
+		border:1px solid green;
+		background-color:rgba(0,0,0,0);
+		font-size:18px;
+		padding:5px;
+	}
+</style>
+<script>
+export default {
+	name: 'if-else',
+
+	apiready(){
+		console.log('Component apiready in ... ');
+	},
+	data(){
+		return {
+			title: 'Hello App',
+			error: false,
+			src: 'http://192.168.13.120/images/163.png'
+		};
+	},
+	methods: {
+		// 注释一
+		clickOnece (msg) {
+			api.toast({msg: msg});
+		},
+		clickChange(){
+			console_log('clickChange ... ');
+			if(this.data.error){
+				this.data.error = false;
+			}else{
+				this.data.error = true;
+			}
+		}
+	}
+}
+</script>

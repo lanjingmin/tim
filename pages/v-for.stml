@@ -1,0 +1,99 @@
+<template name='v-for'>
+	<scroll-view>
+		<view id='con'>
+			<view class='sucess-n' v-if='show'>
+				<text class="list-txt">哈哈哈哈</text>
+			</view>
+			<view class='error' v-else>
+				<text class="list-txt">嚯嚯嚯</text>
+			</view>
+			<view class='sucess' v-if='show'>
+				<view class="list-item" v-for="(text, index) in textList" v-bind:key='index'>
+					<img src={this.data.src} class="list-icon" />
+					<text class="list-txt">{{text}}</text>
+				</view>
+			</view>
+			<view class='error' v-else>
+				<view class="list-item" v-for="item in imgList" >
+					<img src={{item.img}} class="list-icon" />
+					<text class="list-txt">{{item.title}}</text>
+				</view>
+			</view>
+			<button id='btn' onClick={this.clickShow}>点击展示列表</button>
+		</view>
+	</scroll-view>
+</template>
+<style>
+	#con{
+		flex:1;
+		background-color:#E8E8E8; 
+		margin:20px 10px;
+		border-radius:6px;
+	}
+	.list-item{
+		flex-direction:row;
+		align-items:center;
+		justify-content:left;
+		background-color:white; 
+		margin:10px;
+		padding: 10px;
+		border:1px solid green;
+		border-radius:6px;
+	}
+	.list-txt{
+		margin-left:35px;
+		height:30px;
+		font-size:18px;
+	}
+	.list-icon{
+		width:50px;
+		height:50px;
+	}
+	#btn{
+		border-radius:3px;
+		margin:10px;
+		border:1px solid green;
+		background-color:rgba(0,0,0,0);
+		font-size:18px;
+		padding:5px;
+	}
+</style>
+<script>
+export default {
+	name: 'v-for',
+
+	apiready(){
+		console.log('Component apiready in ... ');
+	},
+	data(){
+		return {
+			title: 'Hello App',
+			show: false,
+			src: 'http://192.168.13.120/images/163.png',
+			textList:['选项一', '选项二', '选项三', '选项四', '选项五', '选项六'],
+			imgList:[
+				{title:'项目一', img:'../images/163.png'}, 
+				{title:'项目二', img:'../images/dianping.png'}, 
+				{title:'项目三', img:'../images/logo.png'}, 
+				{title:'项目四', img:'../images/suho.png'}, 
+				{title:'项目五', img:'../images/tianmao.png'}, 
+				{title:'项目六', img:'../images/logo.png'}
+			]
+		};
+	},
+	methods: {
+		// 注释一
+		clickOnece (msg) {
+			api.toast({msg: msg});
+		},
+		clickShow(){
+			console.log('clickShow ...');
+			if(this.data.show){
+				this.data.show = false;
+			}else{
+				this.data.show = true;
+			}
+		}
+	}
+}
+</script>

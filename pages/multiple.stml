@@ -1,0 +1,128 @@
+<template name='multiple'>
+    <div class="wrap">
+         <div onclick='jumpto("title")'>time: {{time}}</div>
+         <p v-if="error">some error happend</p>
+         <p v-else class="name">your msg: {{msg}}</p>
+         <p v-show="msg" class="shown">test v-show</p>
+         <p v-on:click="clickMethod">test v-on</p>
+         <img v-bind:src="imageSrc" >
+		 <div v-if='show'>
+			 <ul class="test-list">
+				 <li v-for="(value, index) in list" v-bind:key="index" class="list-item">
+					 <div>{{value}}</div>
+					 <span>{{msg}}</span>
+				 </li>
+			 </ul>
+		 </div>
+		 <div v-else>
+			 <ul class="test-list">
+				 <li v-for="(value, index) in list2" v-bind:key="index" class="list-item">
+					 <div>{{value}}</div>
+					 <span>{{msg}}</span>
+				 </li>
+			 </ul>
+		 </div>
+         <span v-text="text"></span>
+		 <span>ctime:{{ctime}}</span>
+		 <span v-text="tttttime"></span>
+         <div v-html="html"></div>
+         {{msg}}
+    </div>
+</template>
+<style>
+	.wrap{
+		flex:1;
+		background-color:grey; 
+		margin:20px 10px;
+		border-radius:6px;
+	}
+	.test-list{
+		
+	}
+	.list-item{
+		flex-direction:row;
+		align-items:center;
+		justify-content:left;
+		background-color:white; 
+		margin:10px;
+		padding: 10px;
+		border:1px solid green;
+		border-radius:6px;
+	}
+</style>
+<script>
+
+    export default {
+        name: 'multiple',
+        props: {
+            msg: {
+                type: String,
+                default: 'hello, sfc'
+            },
+            imageSrc: String
+        },
+
+        data () {
+            const now = Date.now();
+            return {
+                list: [1, 2, 3],
+				list2: [4, 5, 6],
+                html: '<div>1111<span>222</span>333<p>ssssss</p></div>',
+                error: false,
+				show: false,
+                time: now,
+				tttttime:'2019-12-31'
+            }
+        },
+
+        computed: {
+            text () {
+                console.log('text from computed', this.msg);
+                return `${this.time}: ${this.html}`;
+            },
+			ctime () {
+                console.log('ctime from computed', this.msg);
+                return `${this.time}`;
+            },
+			cdays: function(){
+                console.log('cdays from computed', this.msg);
+                return `${this.time}`;
+            }
+        },
+
+        methods: {
+            clickMethod () {
+                console.log('click method');
+				if(this.data.show){
+					this.data.show = false;
+				}else{
+					this.data.show = true;
+				}
+				this.data.time = Date.now();
+				if(this.error){
+					this.error = false;
+				}else{
+					this.error = true;
+				}
+            },
+
+            testMethod () {
+                console.log('call test');
+            }
+        },
+
+        created () {
+            const prevTime = this.time;
+            this.testMethod();
+            const msg = 'this is a test msg';
+            this.time = Date.now();
+            console.log('mounted', msg, this.time);
+        },
+
+        errorCaptured () {
+            this.error = true;
+            this.time = Date.now();
+            console.log('errorCaptured', this.time);
+        }
+    }
+</script>

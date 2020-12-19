@@ -1,0 +1,231 @@
+<template name='l-view'>
+	<view id='page'>
+		<view class="header">
+			<label for='back' id='close'>
+				<img id='back' onclick="api.closeWin()" src="./images/ic_arrow_left.png" style="width:28px;height:28px;" onload="imageloaded('back')"/>
+			</label>
+			<text class='title' onclick={e => this.clickChange('Title Bar')}>Title Bar</text>
+		</view>
+		<swiper id='banner' class='banner' onItemclick="swiperItemclick('1111')">
+			<swiper-item class="banner-item" onclick={e => this.clickChange('swiper-item')}>
+				<img id='$img' src="./images/logo.png" class="list-icon" />
+				<text id='$txt1' style='color:red;font-size:15px;margin-top:20px;'>{{item.title}}</text>
+			</swiper-item>
+		</swiper>
+		<list-view id='list' @itemclick="onitemclicks" dataSource={this.data.imgList} >
+			<list-header class="slot">
+				<view class="footer">
+					<view class='tab-item'>
+						<img class='tab-item-img' src='./images/163.png'/>
+						<text class='tab-item-txt'>网易</text>
+					</view>
+					<view class='tab-item'>
+						<img class='tab-item-img' src='./images/suho.png'/>
+						<text class='tab-item-txt'>搜狐</text>
+					</view>
+					<view class='tab-item'>
+						<img class='tab-item-img' src='./images/dianping.png'/>
+						<text class='tab-item-txt'>新浪</text>
+					</view>
+					<view class='tab-item'>
+						<img class='tab-item-img' src='./images/tianmao.png'/>
+						<text class='tab-item-txt'>雅虎</text>
+					</view>
+				</view>
+			</list-header>
+			<cell>
+				<view class="list-item">
+					<img id='$img' src={{item.img}} class="list-icon" data-index='123' onclick={e => this.clickChange('list-item-img')} />
+					<img id='$img1' src={{item.img}} class="list-icon" placeholder='./images/loading.png' data-index='456' onclick={e => this.clickChange('list-item-img1')} />
+					<text id='$txt' style='color:red;font-size:20px;' class="list-txt">{{item.title}}</text>
+					<text id='$txt1' style='color:red;font-size:15px;' class="list-txt">{{item.sub.de}}</text>
+				</view>
+			</cell>
+			<list-footer class="slot">
+				<swiper id='banner1' class='banner'>
+					<swiper-item class="banner-item" onclick={e => this.clickChange('list-footer-swiper-item')}>
+						<img id='$img' src="./images/logo.png" class="list-icon" />
+						<text id='$txt1' style='color:red;font-size:15px;margin-top:20px;'>{{item}}</text>
+					</swiper-item>
+				</swiper>
+			</list-footer>
+		</list-view>
+		<view class="footer">
+			<view class='tab-item' onclick="tabClick('1')">
+				<img class='tab-item-img' src='./images/nav_tab_1.png'/>
+				<text class='tab-item-txt'>微信</text>
+			</view>
+			<view class='tab-item' onclick="tabClick('2')">
+				<img class='tab-item-img' src='./images/nav_tab_2.png'/>
+				<text class='tab-item-txt'>通讯录</text>
+			</view>
+			<view class='tab-item' onclick="tabClick('3')">
+				<img class='tab-item-img' src='./images/nav_tab_3.png'/>
+				<text class='tab-item-txt'>发现</text>
+			</view>
+			<view class='tab-item' onclick="tabClick('4')">
+				<img class='tab-item-img' src='./images/nav_tab_4.png'/>
+				<text class='tab-item-txt'>我1</text>
+			</view>
+		</view>
+	</view>
+</template>
+<style>
+	#page{
+		height:100%;
+	}
+	.header{
+		flex-direction:row;
+		align-items:center;
+		justify-content:center;
+		width:100%;
+		height:45px;
+		background-color:#1E98D8;
+	}
+	.title{
+		flex:1;
+		text-align:center;
+	}
+	.title:active {
+		color:red;
+	}
+	#close{
+		width:60px;
+		height:28px;
+	}
+	.footer{
+		flex-direction:row;
+		width:auto; 
+		height:50px;
+		padding:0 8px; 
+		background-color:#313131;
+	}
+	.tab-item{
+		height:49px;
+		flex:1;
+		align-items:center;
+		justify-content:center;
+	}
+	.tab-item-img{
+		width:32px; 
+		height:28px;
+	}
+	.tab-item-txt{
+		color:#FFF;
+		margin-top:3px;
+		font-size:12px;
+	}
+	.slot{
+		display: flex;
+		flex-direction:column;
+	}
+	.banner{
+		height:150px;
+		background-color:#E8E8E8;
+	}
+	.banner-item{
+		display: flex;
+		flex-direction:column;
+		align-items:center;
+		justify-content:center;
+		height:100%;
+		width:100%;
+	}
+	#list{
+		flex-grow:1;
+		background-color:#E8E8E8; 
+	}
+	.list-item{
+		flex-direction:row;
+		align-items:center;
+		justify-content:left;
+		background-color:white; 
+		padding:5px;
+		border-bottom:1px solid green;
+	}
+	.list-txt{
+		margin-left:35px;
+		height:30px;
+		font-size:18px;
+	}
+	.list-icon{
+		width:50px;
+		height:50px;
+	}
+</style>
+<script>
+export default {
+	name: 'l-view',
+
+	apiready(){
+		console.log('Component apiready in ... ');
+		/*
+		api.showProgress();
+		api.ajax({
+			url:'https://www.opgap.com/json/test.json'
+		}, function(ret, err){
+			api.hideProgress();
+		});
+		*/
+		var tlp = this.data.imgList;
+		var listdata = new Array();
+		for(var i = 0; i < 3; ++i){
+			listdata = listdata.concat(tlp);
+		}
+		$('#banner').load({data: tlp});
+		setTimeout(function(){
+			$('#list').load({data: listdata});
+		}, 2000);
+		$('#banner1').load({data: this.data.texts});
+	},
+	data(){
+		return {
+			title: 'Hello App',
+			show: true,
+			imgList: [
+				{title:'项目一', img:'http://192.168.13.120/images/163.png', sub:{de:'1'}}, 
+				{title:'项目二', img:'http://192.168.13.120/images/dianping.png', sub:{de:'11'}}, 
+				{title:'项目三', img:'http://192.168.13.120/images/logo.png', sub:{de:'111'}}, 
+				{title:'项目四', img:'http://192.168.13.120/images/suho.png', sub:{de:'1111'}}, 
+				{title:'项目五', img:'http://192.168.13.120/images/tianmao.png', sub:{de:'11111'}}, 
+				{title:'项目六', img:'http://192.168.13.120/images/logo.png', sub:{de:'111111'}}
+			],
+			texts: ['项目一', '项目二', '项目三', '项目四', '项目六', '项目七'],
+			objet: {
+				title: 'How to do lists in Vue',
+				author: 'Jane Doe',
+				publishedAt: '2016-04-10'
+			}
+		};
+	},
+	methods: {
+		clickChange(msg){
+			console.log('clickChange ... ' + msg + $('#back').checked);
+			if(this.data.show){
+				this.data.show = false;
+			}else{
+				this.data.show = true;
+			}
+			api.toast({msg:'ele click: ' + msg});
+		},
+		onitemclicks(any){
+			console.log('onitemclicks ... ' + any);
+			api.toast({msg:'listItemClick: index - ' + any.index});
+		},
+		swiperItemclick(any){
+			console.log('swiperItemclick ... ' + any);
+			api.toast({msg:'swiperItemClick: ' +  + any.index});
+		},
+		tabClick(any){
+			console.log('tabClick ... ' + any);
+			api.toast({msg:'tabClick: ' + any});
+		},
+		imageloaded(any){
+			console.log('imageloaded ... ' + any);
+		},
+		hhhhhFunction:function(){ 
+		
+		}
+	}
+}
+</script>

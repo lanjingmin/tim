@@ -1,0 +1,85 @@
+<template name='computed'>
+	<scroll-view>
+		<view id='con'>
+			<view >
+				<view v-if='error'>
+					<text class="list-txt">{{title}}</text>
+				</view>
+				<view class='list-item'>
+					<text class="list-txt">{{ctime}}</text>
+				</view>
+			</view>
+		</view>
+	</scroll-view>
+</template>
+<style>
+	#con{
+		flex:1;
+		background-color:#E8E8E8; 
+		margin:20px 10px;
+		border-radius:6px;
+	}
+	.list-item{
+		flex-direction:row;
+		align-items:center;
+		justify-content:left;
+		background-color:white; 
+		margin:10px;
+		padding: 10px;
+		border:1px solid green;
+		border-radius:6px;
+	}
+	.list-txt{
+		height:30px;
+		font-size:18px;
+	}
+	.list-icon{
+		width:50px;
+		height:50px;
+	}
+	#btn{
+		border-radius:3px;
+		margin:10px;
+		border:1px solid green;
+		background-color:rgba(0,0,0,0);
+		font-size:18px;
+		padding:5px;
+	}
+</style>
+<script>
+export default {
+	name: 'computed',
+
+	apiready(){
+		console.log('Component apiready in ... ');
+		var that = this;
+		if(that.data.timeId){
+			clearInterval(that.data.timeId);
+		}
+		that.data.timeId = setInterval(function(){
+			that.data.time = new Date().toLocaleString();
+		}, 1000);
+	},
+	data(){
+		const now = new Date().toLocaleString();
+		return {
+			title: '暂时不支持',
+			error: false,
+			time: now,
+			timeId: null
+		};
+	},
+	computed: {
+		primaryColor: function () {
+			return colorTable[this.type];
+		},
+		ctime () {
+			console.log('ctime from computed', this.time);
+			return `现在时刻：${this.time}`;
+		}
+	},
+	methods: {
+		
+	}
+}
+</script>
